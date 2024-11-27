@@ -1,0 +1,24 @@
+---
+title: "qualitative measures"
+author: "Naomi Liftman"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r message = FALSE, warning = FALSE, error = FALSE}
+# loading the necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(rio)
+library(stringr)
+library(RColorBrewer)
+library(gt)
+library(gtExtras)
+```
+
+# First Section Qualitative Analysis
+
+```{r}
+#pulling the data and renaming the first section
+survey_hopefully <- import("well_being_survey.xlsx") 
+```
