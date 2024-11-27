@@ -14,8 +14,6 @@ library(stringr)
 library(RColorBrewer)
 library(gt)
 library(gtExtras)
-library(data.tree)
-library(treemap)
 ```
 
 # Teaching for top priority item 
@@ -41,6 +39,8 @@ teaching_df <- teaching_priority %>%
 
 #removing the rows that make no sense (are numbers)
 teaching_df_clean <- teaching_df[-c(1:11, 21), ]
+
+teaching_alp <- teaching_df_clean
 ```
 
 # Graphing it baby
@@ -99,24 +99,6 @@ ggplot(data = teaching_df_three_clean, aes(x = third_priority, y = n, fill = thi
 ```
 
 # Merging the dataframes
-```{r}
-teaching_df_clean <- teaching_df_clean %>% 
-  rename("count_first" = n)
-
-teaching_df_clean_two <- teaching_df_clean_two %>% 
-  rename("count_second" = n)
-
-top_two <- teaching_df_clean %>% 
-  cross_join(teaching_df_clean_two)
-
-
-```
-
-
-# Creating a data tree based on the dataframes merged
-```{r}
-
-```
 
 
 
