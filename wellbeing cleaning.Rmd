@@ -191,3 +191,9 @@ model_1_part_2 <- model_1 %>%
   columns = everything())
 
 model_1_part_2
+```
+
+
+
+
+
