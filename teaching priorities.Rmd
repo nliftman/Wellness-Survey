@@ -75,5 +75,26 @@ ggplot(data = teaching_df_clean_two, aes(x = second_priority, y = n, fill = seco
   scale_colour_brewer(palette = 1)
 
 ```
+# Selecting third priorities
 
+```{r}
+#counting peoples top priorities 
+teaching_df_three <- teaching_priority %>% 
+  drop_na(third_priority) %>% 
+  count(third_priority) 
+
+#removing the rows that make no sense (there are for some reason a lot on this one)
+teaching_df_three_clean <- teaching_df_three %>% 
+  filter(n != 1)
+```
+
+# Graphing it baby
+```{r}
+ggplot(data = teaching_df_three_clean, aes(x = third_priority, y = n, fill = third_priority)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle= 45, hjust = 1)) +
+  labs(x = "Item", y = "Count", title = "Top Priority in Teaching") + 
+  scale_colour_brewer(palette = 1)
+
+```
 
