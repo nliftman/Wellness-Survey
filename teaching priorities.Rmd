@@ -29,17 +29,51 @@ teaching_priority <- survey_hopefully %>%
   select(first_priority:third_priority)
 ```
 
+# Selecting just the first prirorites 
+
 ```{r}
 #counting peoples top priorities 
-teaching_priority %>% 
+teaching_df <- teaching_priority %>% 
   drop_na(first_priority) %>% 
-  count(first_priority)
+  count(first_priority) 
+
+#removing the rows that make no sense (are numbers)
+teaching_df_clean <- teaching_df[-c(1:11, 21), ]
+
+teaching_alp <- teaching_df_clean
+```
+
+# Graphing it baby
+```{r}
+ggplot(data = teaching_df_clean, aes(x = first_priority, y = n, fill = first_priority)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle= 45, hjust = 1)) +
+  labs(x = "Item", y = "Count", title = "Top Priority in Teaching") + 
+  scale_colour_brewer(palette = 1)
+
 ```
 
 
+# Selecting second priorities
 
+```{r}
+#counting peoples top priorities 
+teaching_df_two <- teaching_priority %>% 
+  drop_na(second_priority) %>% 
+  count(second_priority) 
 
+#removing the rows that make no sense (are numbers)
+teaching_df_clean_two <- teaching_df_two[-c(1:11, 21), ]
+```
 
+# Graphing it baby
+```{r}
+ggplot(data = teaching_df_clean_two, aes(x = second_priority, y = n, fill = second_priority)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle= 45, hjust = 1)) +
+  labs(x = "Item", y = "Count", title = "Top Priority in Teaching") + 
+  scale_colour_brewer(palette = 1)
 
+```
 
 
