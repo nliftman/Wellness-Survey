@@ -5,3 +5,189 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
+```{r message = FALSE, warning = FALSE, error = FALSE}
+# loading the necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(rio)
+library(stringr)
+library(RColorBrewer)
+library(gt)
+library(gtExtras)
+```
+
+# First Section
+
+```{r}
+#pulling the data and renaming the first section
+survey_hopefully <- import("well_being_survey.xlsx") %>% 
+  rename("large_enrollment" = 7,
+         "update_tech_hybrid" = 8,
+         "mentoring" = 9,
+         "three_year" = 10,
+         "teaching_evals_replace" = 11,
+         "course_release_national_level_service" = 12,
+         "incentives_mentoring" = 13,
+         "distribute_workloads" = 14)
+  
+# just the first section data
+first_section <- survey_hopefully %>% 
+  select(ID, large_enrollment:distribute_workloads)
+
+#remove the rows that have nonsense (they have no ID, but I cann
+first_section <- first_section %>% 
+  drop_na(ID)
+
+```
+
+# Removing all Characters and Converting to Numeric for Large Enrollment
+```{r}
+#removing highest and lowest from each of the sections so we can convert to numeric
+#large_enrollment
+#replacing the NA's with the lowest!
+first_section[is.na(first_section)] <- 6
+
+#removing all the blank spaces on both sides of the string
+first_section$large_enrollment <- str_trim(first_section$large_enrollment, side = c("both"))
+
+#removing the strings and replacing them with numbers
+first_section$large_enrollment <- sub("1 - Highest", 1, first_section$large_enrollment)
+first_section$large_enrollment <- sub("5 - Lowest", 5, first_section$large_enrollment)
+
+#turning it all to numeric
+first_section$large_enrollment <- as.numeric(first_section$large_enrollment)
+
+#drop the 6's so we can run t-test
+large_enroll_for_t <- first_section %>% 
+  filter(large_enrollment != 6)
+
+#count df
+rehee <- first_section %>% 
+  count(large_enrollment)
+```
+
+# Running T-tests to see if these findings are statistically different than if it did not matter at all
+
+```{r}
+#testing if it was random then the average should be 3 if no one really has strong feelings
+t.test(large_enroll_for_t$large_enrollment, mu = 3)
+#oooOOOOoooooO people care!
+```
+
+# Making a Pie Chart!
+```{r}
+pie(rehee$n, col = c("#ff4e50", "#fc913a", "#f9d62e", "#eae374",  "#e2f4c7", "#fcfdf9", border = "white"), labels = c("1 - Highest", "2", "3", "4", "5 - Lowest", "No Answer"), main = "Large enrollments, challenging time schedules or difficult schedules ")
+```
+
+# Cleaning all of the Teaching to make numeric
+
+```{r}
+#removing highest and lowest from each of the sections so we can convert to numeric
+#removing all the blank spaces on both sides of the string
+first_section$update_tech_hybrid <- str_trim(first_section$update_tech_hybrid, side = c("both"))
+first_section$mentoring <- str_trim(first_section$mentoring, side = c("both"))
+first_section$three_year <- str_trim(first_section$three_year, side = c("both"))
+first_section$teaching_evals_replace <- str_trim(first_section$teaching_evals_replace, side = c("both"))
+first_section$course_release_national_level_service <- str_trim(first_section$course_release_national_level_service, side = c("both"))
+first_section$incentives_mentoring <- str_trim(first_section$incentives_mentoring, side = c("both"))
+first_section$distribute_workloads <- str_trim(first_section$distribute_workloads, side = c("both"))
+
+#removing the strings and replacing them with numbers
+first_section$update_tech_hybrid <- sub("1 - Highest", 1, first_section$update_tech_hybrid)
+first_section$update_tech_hybrid <- sub("5 - Lowest", 5, first_section$update_tech_hybrid)
+first_section$mentoring <- sub("1 - Highest", 1, first_section$mentoring)
+first_section$mentoring <- sub("5 - Lowest", 5, first_section$mentoring)
+first_section$three_year <- sub("1 - Highest", 1, first_section$three_year)
+first_section$three_year <- sub("5 - Lowest", 5, first_section$three_year)
+first_section$teaching_evals_replace <- sub("1 - Highest", 1, first_section$teaching_evals_replace)
+first_section$teaching_evals_replace <- sub("5 - Lowest", 5, first_section$teaching_evals_replace)
+first_section$course_release_national_level_service <- sub("1 - Highest", 1, first_section$course_release_national_level_service)
+first_section$course_release_national_level_service <- sub("5 - Lowest", 5, first_section$course_release_national_level_service)
+first_section$incentives_mentoring <- sub("1 - Highest", 1, first_section$incentives_mentoring)
+first_section$incentives_mentoring <- sub("5 - Lowest", 5, first_section$incentives_mentoring)
+first_section$distribute_workloads <- sub("1 - Highest", 1, first_section$distribute_workloads)
+first_section$distribute_workloads <- sub("5 - Lowest", 5, first_section$distribute_workloads)
+
+#turning it all to numeric
+first_section$update_tech_hybrid <- as.numeric(first_section$update_tech_hybrid)
+first_section$mentoring <- as.numeric(first_section$mentoring)
+first_section$three_year <- as.numeric(first_section$three_year)
+first_section$teaching_evals_replace <- as.numeric(first_section$teaching_evals_replace)
+first_section$course_release_national_level_service <- as.numeric(first_section$course_release_national_level_service)
+first_section$incentives_mentoring <- as.numeric(first_section$incentives_mentoring)
+first_section$distribute_workloads <- as.numeric(first_section$distribute_workloads)
+
+#drop the 6's so we can run t-test
+for_t <- first_section %>% 
+  filter(update_tech_hybrid != 6,
+         mentoring != 6,
+         three_year != 6,
+         teaching_evals_replace != 6,
+         course_release_national_level_service != 6,
+         incentives_mentoring != 6,
+         distribute_workloads != 6)
+```
+
+# t-test time babyyyyyy
+
+```{r}
+#runing t-test on updating tech
+t.test(for_t$update_tech_hybrid, mu = 3, conf.level = .99)
+
+#t-test for mentoring
+t.test(for_t$mentoring, mu = 3,  conf.level = .99)
+
+#t-test for three year
+t.test(for_t$three_year, mu = 3,  conf.level = .99)
+
+#t-test for teaching evals
+t.test(for_t$teaching_evals_replace, mu = 3, conf.level = .99)
+
+#t-test for national
+t.test(for_t$course_release_national_level_service, mu = 3, conf.level = .99)
+
+#t-test for incentives
+t.test(for_t$incentives_mentoring, mu = 3, conf.level = .99)
+
+#t-test for distributing
+t.test(for_t$distribute_workloads, mu = 3, conf.level = .99)
+```
+
+# Pretty Tables Time!!!!! Yippie!!!
+
+```{r}
+#naming the variables
+topic <- NA
+average <- NA
+lower_bound <- NA
+upper_bound <- NA
+p_value <- NA
+
+#turning into a data frame
+teaching_tables <- data.frame(topic, average, lower_bound, upper_bound, p_value)
+
+#adding the different names and numbers!
+teaching_tables[1, ] <- list("Provide adequate teaching resources for classes with large enrollments, challenging time schedules or difficult schedules", 2.1339,2.0558, 2.2120, "< 2.2e-16")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Upgrade technology and training so that hybrid teaching is possible and of high quality", 2.7853, 2.6655, 2.9052, "4.425e-06")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Provide faculty with mentoring opportunities in competency-based training on undergraduate and graduate-level teaching", 2.7198, 2.6111, 2.8285, "5.27e-11")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("3 year plan for teaching", 2.3226, 3.3240, 3.5527, "< 2.2e-16")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Replace student evaluations of teaching with more evidence based methods for ensuring quality teaching", 2.3226, 2.2065, 2.4387, "< 2.2e-16")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Allow course release for national level service participation (e.g. Chair of a professional society)", 2.8638, 2.7449, 2.9826, "0.0032")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Provide incentives and training for mentoring PhD students", 2.5437, 2.4274, 2.6603, "< 2.2e-16")
+teaching_tables[nrow(teaching_tables) + 1, ] <- list("Create transparent and realistic faculty workload models that distribute workloads equitably across faculty in the department", 1.7147, 1.6178, 1.8115, "< 2.2e-16")
+
+
+#turning it into a model with the gt function
+model_1 <- gt(teaching_tables)
+
+#now making it look pretty!
+model_1_part_2 <- model_1 %>% 
+  gt_add_divider(columns = "topic") %>% 
+  gt_add_divider(columns = "upper_bound") %>% 
+  gt_theme_538() %>% 
+  gt_color_rows(average) %>% 
+  cols_align(
+  align = c("right"),
+  columns = everything())
+
+model_1_part_2
