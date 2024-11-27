@@ -28,3 +28,18 @@ survey_hopefully <- import("well_being_survey.xlsx") %>%
 teaching_priority <- survey_hopefully %>% 
   select(first_priority:third_priority)
 ```
+
+```{r}
+#counting peoples top priorities 
+teaching_priority %>% 
+  drop_na(first_priority) %>% 
+  count(first_priority)
+```
+
+
+
+
+
+
+
+
