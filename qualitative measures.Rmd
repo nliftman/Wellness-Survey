@@ -19,6 +19,10 @@ library(gtExtras)
 # First Section Qualitative Analysis
 
 ```{r}
-#pulling the data and renaming the first section
-survey_hopefully <- import("well_being_survey.xlsx") 
+#pulling the data and just getting the qualitative responses 
+survey_hopefully <- import("well_being_survey.xlsx") %>% 
+  rename( "qualtiative" = 15) %>% 
+  select("qualtiative") %>% 
+  drop_na("qualtiative")
+
 ```
