@@ -124,7 +124,7 @@ top_tree <- full_join(top_two, teaching_df_three_clean, by_part_two)
 
 # Creating a data tree based on the dataframes merged
 ```{r}
-ggplot(data = by_part_two)
+ggplot(data = top_tree, )
 ```
 
 
