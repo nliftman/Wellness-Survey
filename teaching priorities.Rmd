@@ -124,9 +124,32 @@ top_tree <- full_join(top_two, teaching_df_three_clean, by_part_two)
 
 # Creating Pretty tables from the data frame
 ```{r}
+#initializing as a gt
+table_1 <- gt(top_tree)
+
+#now making it pretty
+table_1_part_2 <- table_1 %>% 
+  cols_label(
+    first_priority = "",
+    count_first = "1st",
+    count_second = "2nd",
+    count_third = "3rd") %>% 
+    gt_add_divider(columns = c(first_priority, count_first, count_second)) %>% 
+  cols_align(
+  align = c("center"),
+  columns = c(count_first, count_second, count_third)) %>% 
+  gt_highlight_rows(
+    columns = c(count_first, count_second),
+    rows = c(4), 
+    font_weight = "normal") %>% 
+  gt_highlight_rows(
+    columns = c(count_third),
+    rows = c(5), 
+    font_weight = "normal")
 
 
 
+table_1_part_2
 ```
 
 
