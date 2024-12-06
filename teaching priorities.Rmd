@@ -48,8 +48,8 @@ teaching_df_clean <- teaching_df[-c(1:11, 21), ]
 ggplot(data = teaching_df_clean, aes(x = first_priority, y = n, fill = first_priority)) + 
   geom_col() +
   theme(axis.text.x = element_text(angle= 45, hjust = 1)) +
-  labs(x = "Item", y = "Count", title = "Top Priority in Teaching") + 
-  scale_colour_brewer(palette = 1)
+  labs(x = "Item", y = "Count", title = "Top Priority in Teaching")  +
+  scale_fill_manual(values = c("#e2c5e8", "#e2c5e8", "#e2c5e8", "#427a05", "#cbd563","#9bc563", "#e2c5e8", "#e2c5e8", "#e2c5e8"), guide = "none") 
 
 ```
 
@@ -176,10 +176,10 @@ table_1_part_2
 #graphing it?
 ```{r}
 ggplot() + 
-  geom_col(data = top_tree, aes(x = first_priority, y = count_first, fill = "red"), position = "dodge") +
+  geom_col(data = top_tree, aes(x = first_priority, y = count_first, fill = "red")) +
   theme(axis.text.x = element_text(angle= 45, hjust = 1)) +
-  geom_col(data = top_tree, aes(x = first_priority, y = count_second, fill = "blue"), position = "dodge") +
-  geom_col(data = top_tree, aes(x = first_priority, y = count_third, fill = "green"), position = "dodge") 
+  geom_col(data = top_tree, aes(x = first_priority, y = count_second, fill = "blue")) +
+  geom_col(data = top_tree, aes(x = first_priority, y = count_third, fill = "green")) 
 ```
 
 
