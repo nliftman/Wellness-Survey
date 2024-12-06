@@ -30,6 +30,7 @@ qualitative <- survey_hopefully %>%
   select(teaching, gov, worklife, research)
 ```
 
+#starting the cleaning
 
 
 
