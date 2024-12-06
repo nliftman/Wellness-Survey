@@ -20,9 +20,17 @@ library(gtExtras)
 
 ```{r}
 #pulling the data and just getting the qualitative responses 
-survey_hopefully <- import("well_being_survey.xlsx") %>% 
-  rename( "qualtiative" = 15) %>% 
-  select("qualtiative") %>% 
-  drop_na("qualtiative")
+survey_hopefully <- import("qualitative_well_being.csv") %>% 
+  rename("teaching" = 16,
+         "gov" = 32,
+         "worklife" = 47,
+         "research" = 61)
 
+qualitative <- survey_hopefully %>% 
+  select(teaching, gov, worklife, research)
 ```
+
+
+
+
+
