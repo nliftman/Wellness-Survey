@@ -41,6 +41,12 @@ teaching_df <- teaching_priority %>%
 
 #removing the rows that make no sense (are numbers)
 teaching_df_clean <- teaching_df[-c(1:11, 21), ]
+
+#adding percentages and only letting them go to 2 decimals
+teaching_df_clean <- teaching_df_clean %>% 
+  mutate(perc = (n/sum(n))*100) 
+teaching_df_clean$perc <- round(teaching_df_clean$perc, digits = 2)
+
 ```
 
 # Graphing it baby
@@ -55,11 +61,12 @@ ggplot(data = teaching_df_clean, aes(x = first_priority, y = n, fill = first_pri
 # Making a Pie Chart
 ```{r}
 pie(teaching_df_clean$n, 
-    col = c("white", "white", "white", "#427a05", "#cbd563","#9bc563", "white", "white", "white"),
-    labels = c("Course release", "Mentoring for teaching", "Other", "Realistic faculty workloads", "Replace student evaluations", "Teaching resources", "Three-year teaching schedule", "Training for mentoring graduate students","Upgrade technology"))
+    col = c("white", "white", "white", "#d929ee", "#9580F1","#11ceda", "white", "white", "white"),
+    labels = c("Course release", "Mentoring for teaching", "Other", "Realistic faculty workloads", "Replace student evaluations", "Teaching resources", "Three-year teaching schedule", "Training for mentoring graduate students","Upgrade technology"),
+    main = "Top Priority in Teaching")
 ```
 
-
+# making a much hotter and cooler pie chart
 
 # Selecting second priorities
 
