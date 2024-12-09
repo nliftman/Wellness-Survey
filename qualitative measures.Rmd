@@ -30,8 +30,85 @@ qualitative <- survey_hopefully %>%
   select(teaching, gov, worklife, research)
 ```
 
-#starting the cleaning
+#starting the cleaning for teaching
+```{r}
+#counting everything for teaching
+qualitative %>% count(teaching)
 
+#manually changing the silly ones 
+#update tech
+qualitative[qualitative == "Update Tech"] <- "Upgrade Tech"
+qualitative[qualitative == "Upgrade tech"] <- "Upgrade Tech"
+qualitative[qualitative == "Embrace Technology"] <- "Upgrade Tech"
 
+# Teaching Culture
+qualitative[qualitative == "Teaching Culture"] <- "Teaching Excellence"
+
+#Pedagogical Skills
+qualitative[qualitative == "Pedagogical Skills"] <- "Pedagogy Skills"
+
+# online teaching
+qualitative[qualitative == "Online Teaching"] <- "Hybrid Teaching"
+
+# mentorship
+qualitative[qualitative == "Incentives for Mentorship"] <- "Incentives for Mentoring"
+
+# FTE
+qualitative[qualitative == "FT Teaching"] <- "FTE"
+
+#counting everything for teaching after changing
+qualitative %>% count(teaching)
+```
+# Pretty Tables for Teaching
+```{r}
+#just teaching
+teaching <- qualitative %>% 
+  select(teaching) %>% 
+  count(teaching)
+
+#removing all of the blanks
+teaching <- teaching[-c(1), ]
+
+#selecting only things that have more than 1! 
+teaching_more <- teaching %>% 
+  filter(n > 1)
+
+#initializing as a gt
+table_1 <- gt(teaching)
+#showing it
+table_1
+
+#initialize over 2 as a gt 
+table_2 <- gt(teaching_more)
+#showing it
+table_2
+
+#teaching over 3
+teaching_3 <- teaching %>% 
+  filter(n > 2)
+table_3 <- gt(teaching_3)
+table_3
+```
+
+# side by side tables
+```{r}
+#picking first half manually
+first_half_teaching <- teaching_more %>% 
+  slice(1:19)
+
+#picking second half manually
+second_half_teaching <- teaching_more %>%
+  slice(20:38)
+
+#converting to GT tables
+first_half_teaching <- gt(first_half_teaching)
+second_half_teaching <- gt(second_half_teaching)
+
+#adding them to a list
+listed_tables <- list(first_half_teaching, second_half_teaching)
+
+#making into a pretty table!
+gt_two_column_layout(listed_tables)
+```
 
 
