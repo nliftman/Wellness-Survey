@@ -52,6 +52,13 @@ ggplot(data = teaching_df_clean, aes(x = first_priority, y = n, fill = first_pri
   scale_fill_manual(values = c("#e2c5e8", "#e2c5e8", "#e2c5e8", "#427a05", "#cbd563","#9bc563", "#e2c5e8", "#e2c5e8", "#e2c5e8"), guide = "none") 
 
 ```
+# Making a Pie Chart
+```{r}
+pie(teaching_df_clean$n, 
+    col = c("white", "white", "white", "#427a05", "#cbd563","#9bc563", "white", "white", "white"),
+    labels = c("Course release", "Mentoring for teaching", "Other", "Realistic faculty workloads", "Replace student evaluations", "Teaching resources", "Three-year teaching schedule", "Training for mentoring graduate students","Upgrade technology"))
+```
+
 
 
 # Selecting second priorities
