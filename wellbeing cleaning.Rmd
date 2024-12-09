@@ -76,7 +76,9 @@ t.test(large_enroll_for_t$large_enrollment, mu = 3)
 
 # Making a Pie Chart!
 ```{r}
-pie(rehee$n, col = c("#ff4e50", "#fc913a", "#f9d62e", "#eae374",  "#e2f4c7", "#fcfdf9", border = "white"), labels = c("1 - Highest", "2", "3", "4", "5 - Lowest", "No Answer"), main = "Large enrollments, challenging time schedules or difficult schedules ")
+pie(rehee$n, col = c("#ff4e50", "#fc913a", "#f9d62e", "#eae374",  "#e2f4c7", "#fcfdf9", border = "white"),
+    labels = c("1 - Highest", "2", "3", "4", "5 - Lowest", "No Answer"), main = "Large enrollments,
+    challenging time schedules or difficult schedules ")
 ```
 
 # Cleaning all of the Teaching to make numeric
