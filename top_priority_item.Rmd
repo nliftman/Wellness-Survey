@@ -92,7 +92,7 @@ ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
 #ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
  #      geom_bar(width = 1, stat = "identity") +
   #     coord_polar("y", start = 0) +
-   #    geom_label_repel(aes(label = perc), size=5, show.legend = F, , nudge_x = .7) +
+   #    geom_label_repel(aes(label = perc), size=5, show.legend = F, nudge_x = .7, nudge_y = -1) +
     #   guides(fill = guide_legend(title = "Group"))
 ```
 
