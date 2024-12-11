@@ -51,6 +51,9 @@ teaching_df_clean <- teaching_df_clean %>%
   mutate(perc = (n/sum(n))*100) 
 teaching_df_clean$perc <- round(teaching_df_clean$perc, digits = 2)
 
+#rearranged for making pretty pie charts
+teaching_pie <- teaching_df_clean %>% 
+  arrange(desc(n))
 ```
 
 # Graphing it baby
@@ -64,7 +67,7 @@ ggplot(data = teaching_df_clean, aes(x = first_priority, y = n, fill = first_pri
 ```
 # Making a Pie Chart
 ```{r}
-pie(teaching_df_clean$n, 
+pie(teaching_pie$n, 
     col = c("white", "white", "white", "#d929ee", "#9580F1","#11ceda", "white", "white", "white"),
     labels = c("Course release", "Mentoring for teaching", "Other", "Realistic faculty workloads", "Replace student evaluations", "Teaching resources", "Three-year teaching schedule", "Training for mentoring graduate students","Upgrade technology"),
     main = "Top Priority in Teaching")
@@ -72,10 +75,10 @@ pie(teaching_df_clean$n,
 
 # making a much hotter and cooler pie chart
 ```{r}
-ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
+ggplot(teaching_pie, aes(x = "", y = perc, fill = first_priority)) +
   geom_col(color = "black") +
   geom_label(aes(label = perc),
-             position = position_stack(vjust = 0.5),
+             position = position_stack(vjust = .5),
              show.legend = FALSE) +
   coord_polar(theta = "y") + 
   theme_void()+
@@ -83,6 +86,24 @@ ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
        fill = "Item of Top Priority") +
   scale_fill_manual(values = c("#f7fcf5", "#e5f5e0", "#c7e9c0", "#d929ee", "#9580F1","#11ceda", "#a1d99b", "#74c476", "#41ab5d"))
 ```
+
+# again trying to make it easier to read
+```{r}
+#cannot figure out how to reorder a pie chart if I do it this way?
+#may just need to do a pie chart function and go crazy with that
+
+#god this is ugly goddamn
+pie(teaching_pie$n, labels = teaching_pie$perc, col = rainbow(length(teaching_pie$first_priority)))
+legend("topright", c("Realistic faculty workloads","Teaching resources", "Replace student evaluations", "Upgrade technology", "Other", "Training for mentoring graduate students", "Course release", "Mentoring for teaching", "Three-year schedule"), cex = 0.5, fill = rainbow(length(teaching_pie$first_priority)))
+
+# ahhhhhh
+ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
+  geom_col(color = "black") +
+  coord_polar(theta = "y")
+  
+```
+
+
 
 # attempting to make the pie chart easier to read!
 
