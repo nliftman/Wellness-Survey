@@ -67,6 +67,20 @@ pie(teaching_df_clean$n,
 ```
 
 # making a much hotter and cooler pie chart
+```{r}
+ggplot(teaching_df_clean, aes(x = "", y = perc, fill = first_priority)) +
+  geom_col(color = "black") +
+  geom_label(aes(label = perc),
+             position = position_stack(vjust = 0.5),
+             show.legend = FALSE) +
+  coord_polar(theta = "y") + 
+  theme_void()+
+  labs(title = "Top Priority in Teacing",
+       fill = "Item of Top Priority") +
+  scale_fill_manual(values = c("white", "white", "white", "#d929ee", "#9580F1","#11ceda", "white", "white", "white"))
+```
+
+
 
 # Selecting second priorities
 
