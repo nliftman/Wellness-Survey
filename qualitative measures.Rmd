@@ -115,7 +115,7 @@ second_half_teaching <- gt(second_half_teaching)
 second_half_teaching <- second_half_teaching %>% 
    gt_highlight_rows(
     columns = c(teaching, n),
-    rows = c(4, 12, 13, 19), 
+    rows = c(4, 12, 13,17 ,19), 
     font_weight = "normal")
 
 #adding them to a list
