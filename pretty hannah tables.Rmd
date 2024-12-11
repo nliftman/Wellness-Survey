@@ -1,0 +1,120 @@
+---
+title: "pretty hannah tables"
+author: "Naomi Liftman"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+# Load Packages
+```{r}
+library(tidyverse)
+library(gt)
+library(gtExtras)
+```
+
+# making data frames based on their findings
+```{r}
+# making a df!
+variable <- NA
+estimate <- NA
+sd <- NA
+p_value <- NA
+
+#adding all the bits to the first model
+m1 <- data.frame(variable, estimate, sd, p_value)
+m1[1, ] <- list("Intercept", "4.59", "1.06", "-")
+m1[nrow(m1) + 1, ] <- list("Baseline CD4 Count", "-1.28", "0.27", "<.001")
+
+model1 <- gt(m1)
+
+model1visual <- model1 %>% 
+  tab_options(
+    #create footnote
+    footnotes.marks = "*"
+  ) %>% 
+  #name the columns
+  cols_label(
+    variable = "",
+    estimate = "Estimate",
+    sd = "Standard Error",
+    p_value = "p-value"
+  ) %>% 
+  #label the footnote and shows which to put the footnote on 
+  tab_footnote(
+    footnote = "p < .05",
+    locations = cells_body(
+      columns = c(p_value), rows = 2) 
+  ) %>% 
+  #right align them visually
+  cols_align(
+  align = c("center"),
+  columns = everything(2:5)
+) %>% 
+  cols_align(
+  align = c("left"),
+  columns = everything(1)
+) %>% 
+  gt_highlight_rows(
+    columns = c(variable:p_value),
+    rows = c(2), 
+    font_weight = "normal") %>% 
+  tab_spanner(
+    label = "Model 1",
+    columns = everything()
+  ) 
+
+model1visual
+```
+
+# larger table
+
+```{r}
+#adding all the bits to the second model
+m2 <- data.frame(variable, estimate, sd, p_value)
+m2[1, ] <- list("Intercept", "5.29", "1.97", "-")
+m2[nrow(m2) + 1, ] <- list("Baseline CD4 Count", "-1.69", "0.46", "<.001")
+m2[nrow(m2) + 1, ] <- list("Baseline Sexual Activity", "0.16", "0.17", "0.33")
+m2[nrow(m2) + 1, ] <- list("Baseline ART Status", "-1.39", "1.27", "0.32")
+m2[nrow(m2) + 1, ] <- list("Baseline Septrin", "0.67", "0.93", "0.47")
+
+model2 <- gt(m2)
+
+model2visual <- model2 %>% 
+  tab_options(
+    #create footnote
+    footnotes.marks = "*"
+  ) %>% 
+  #name the columns
+  cols_label(
+    variable = "",
+    estimate = "Estimate",
+    sd = "Standard Error",
+    p_value = "p-value"
+  ) %>% 
+  #label the footnote and shows which to put the footnote on 
+  tab_footnote(
+    footnote = "p < .05",
+    locations = cells_body(
+      columns = c(p_value), rows = 2) 
+  ) %>% 
+  #right align them visually
+  cols_align(
+  align = c("center"),
+  columns = everything(2:5)
+) %>% 
+  cols_align(
+  align = c("left"),
+  columns = everything(1)
+) %>% 
+  gt_highlight_rows(
+    columns = c(variable:p_value),
+    rows = c(2), 
+    font_weight = "normal") %>% 
+  tab_spanner(
+    label = "Model 2",
+    columns = everything()
+  ) 
+
+model2visual
+```
+
+
