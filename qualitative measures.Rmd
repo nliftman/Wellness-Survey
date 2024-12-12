@@ -92,6 +92,7 @@ table_3
 
 # side by side tables
 ```{r}
+
 #picking first half manually
 first_half_teaching <- teaching_more %>% 
   slice(1:19)
@@ -103,20 +104,23 @@ second_half_teaching <- teaching_more %>%
 #converting to GT tables
 first_half_teaching <- gt(first_half_teaching)
 #adding highlighting
-first_half_teaching <- first_half_teaching %>% 
-  gt_highlight_rows(
-    columns = c(teaching, n),
-    rows = c(4, 6, 16), 
-    font_weight = "normal")
+first_half_teaching <- first_half_teaching %>%
+  #i am going to manually fill in each column like a PSYCHO <3 
+  data_color(columns = n,
+             target_columns = c(teaching, n),
+             colors = c("white", "#117a65"))
+  #gt_highlight_rows(
+   # columns = c(teaching, n),
+    #rows = c(4, 6, 16), 
+    #font_weight = "normal")
   
 #converting to GT tables
 second_half_teaching <- gt(second_half_teaching)
 #adding highlighting
 second_half_teaching <- second_half_teaching %>% 
-   gt_highlight_rows(
-    columns = c(teaching, n),
-    rows = c(4, 12, 13,17 ,19), 
-    font_weight = "normal")
+  data_color(columns = n,
+             target_columns = c(teaching, n),
+             colors = c("white", "#117a65"))
 
 #adding them to a list
 listed_tables <- list(first_half_teaching, second_half_teaching)
