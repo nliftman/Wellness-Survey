@@ -253,6 +253,73 @@ all_qual <- rbind(all_qual, research)
 ```
 
 # haha now doing it correctly like a fools
+```{r}
+#just t
+t <- survey_hopefully %>% 
+  select(teaching) %>% 
+  rename("item" = teaching)
+
+g <- survey_hopefully %>% 
+  select(gov) %>% 
+  rename("item" = gov)
+
+worklife <- survey_hopefully %>% 
+  select(worklife) %>% 
+  rename("item" = worklife)
+
+research <- survey_hopefully %>% 
+  select(research) %>% 
+  rename("item" = research)
+
+#all of em!!! horrayYYYYyyYyY
+qualitative_all <- bind_rows(t, g, worklife, research)
+
+#remove all the rows without anything in them
+q_all_no_empty <- data.frame(qualitative_all[!apply(qualitative_all == "", 1, all),])
+
+#rename bc what the hell happened
+q_all_no_empty <- q_all_no_empty %>% 
+  rename("item" = 1)
+
+#fixing all these goddamn shits by hand before counting them
+q_all_no_empty[q_all_no_empty == "Core resources"] <- "Core Resources"
+q_all_no_empty[q_all_no_empty == "Culture"] <- "Cultural Changes"
+q_all_no_empty[q_all_no_empty == "Culture Changes"] <- "Cultural Changes"
+q_all_no_empty[q_all_no_empty == "Dean Accountability"] <- "Accountability"
+q_all_no_empty[q_all_no_empty == "Department Chair Accountability"] <- "Accountability"
+q_all_no_empty[q_all_no_empty == "Housing Assistance"] <- "Housing"
+q_all_no_empty[q_all_no_empty == "Incentives for Mentorship"] <- "Incentives for Mentoring"
+q_all_no_empty[q_all_no_empty == "Pedagogical Skills"] <- "Pedagogy Skills"
+q_all_no_empty[q_all_no_empty == "Sabbatical"] <- "Sabbatical for Teaching Track"
+q_all_no_empty[q_all_no_empty == "Student Harrassment"] <- "Student Harassment"
+q_all_no_empty[q_all_no_empty == "TA support"] <- "TA Support"
+q_all_no_empty[q_all_no_empty == "Tri-Campus Structure"] <- "Tri-Campus"
+q_all_no_empty[q_all_no_empty == "Upgrade tech"] <- "Upgrade Tech"
+q_all_no_empty[q_all_no_empty == "Workloads"] <- "Workload"
+q_all_no_empty[q_all_no_empty == "Accountability for Tenure Track Faculty"] <- "Accountability"
+q_all_no_empty[q_all_no_empty == "Accountability for Tenure Faculty"] <- "Accountability"
+
+#getting the counts
+q_n <- q_all_no_empty %>% 
+  count(item)
+
+#taking all the ones with over 4
+#that gives me  56 items (too many i could do like 20)
+q_n_4 <- q_n %>% 
+  filter(n >= 4)
+
+#doing over 5 (haha only 51)
+q_n_5 <- q_n %>% 
+  filter(n >= 5)
+
+#(down to 35)
+q_n_6 <- q_n %>% 
+  filter(n > 5)
+
+#now over 10
+q_n_10 <- q_n %>% 
+  filter(n > 9)
+```
 
 
 
