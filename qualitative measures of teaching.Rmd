@@ -298,6 +298,9 @@ q_all_no_empty[q_all_no_empty == "Upgrade tech"] <- "Upgrade Tech"
 q_all_no_empty[q_all_no_empty == "Workloads"] <- "Workload"
 q_all_no_empty[q_all_no_empty == "Accountability for Tenure Track Faculty"] <- "Accountability"
 q_all_no_empty[q_all_no_empty == "Accountability for Tenure Faculty"] <- "Accountability"
+q_all_no_empty[q_all_no_empty == "Pay Gap"] <- "Pay"
+
+
 
 #getting the counts
 q_n <- q_all_no_empty %>% 
@@ -321,5 +324,31 @@ q_n_10 <- q_n %>%
   filter(n > 9)
 ```
 
+# making a sexy little table <3 
+```{r}
+#picking first half manually
+first_q <- q_n_10 %>% 
+  slice(1:11)
+
+#picking second half manually
+second_q <- q_n_10 %>% 
+  slice(12:22)
+
+#converting to GT tables
+first_q_gt <- gt(first_q)
+#adding highlighting
+first_q_gt <- first_q_gt %>% 
+  gt_highlight_rows(rows = c(9))
+
+second_q_gt <- gt(second_q)
+second_q_gt <- second_q_gt %>% 
+  gt_highlight_rows(rows = c(2, 10))
+
+#adding them to a list
+listed_tables <- list(first_q_gt, second_q_gt)
+
+#making into a pretty table!
+gt_two_column_layout(listed_tables) 
+```
 
 
