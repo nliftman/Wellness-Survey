@@ -332,7 +332,9 @@ first_q <- q_n_10 %>%
 
 #picking second half manually
 second_q <- q_n_10 %>% 
-  slice(12:22)
+  slice(12:22) %>% 
+  rename("item_2" = item,
+         "n_2" = n)
 
 #converting to GT tables
 first_q_gt <- gt(first_q)
@@ -350,5 +352,12 @@ listed_tables <- list(first_q_gt, second_q_gt)
 #making into a pretty table!
 gt_two_column_layout(listed_tables) 
 ```
+
+# making this table way better bc ive kinda been stupid so far but thats 
+# okay because I have a concussion <3
+```{r}
+
+```
+
 
 
