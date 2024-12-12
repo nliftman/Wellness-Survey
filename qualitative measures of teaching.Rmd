@@ -169,4 +169,90 @@ gt_two_column_layout(listed_tables)
 # Main take away from TEACHING:
 People want to see Pay (38), Workload (26), and Clinical (18)
 
+# The other sections
+## Gov
+```{r}
+#taking all the gov things
+government <- survey_hopefully %>% 
+  select(gov)
+
+#looking at counts for gov
+government %>% 
+  count(gov)
+
+#these are the top BY FAR 
+#pay 37
+#pay gap 24
+#reduce admin bloat 28
+```
+
+
+## Worklife
+```{r}
+work <- survey_hopefully %>% 
+  select(worklife)
+
+work %>% 
+  count(worklife)
+
+#cultural changes 16
+#free tuition for families 12
+#pay 13
+#safe buildings 13
+#childcare 9
+```
+
+# Research
+```{r}
+research <- survey_hopefully %>% 
+  select(research)
+
+#count
+research %>% 
+  count(research)
+
+#arts 32
+#grants 29
+#workday 9
+#funding 9
+```
+
+#adding them all together like a crazy person to see totals
+#this was actually the completly wrong way to do it hahahaha
+```{r}
+#the columns gotta be the same so gonna rename them!
+#teaching
+teaching <- teaching %>% 
+  rename("item" = teaching)
+
+#government, get counts and rename
+gov <- government %>% 
+  count(gov) %>% 
+  rename("item" = gov)
+#removing all of the blanks
+gov <- gov[-c(1), ]
+
+#worklife
+work <- work %>% 
+  count(worklife) %>% 
+  rename("item" = worklife)
+#removing all of the blanks
+work <- work[-c(1), ]
+
+#research
+research <- research %>% 
+  count(research) %>% 
+  rename("item" = research)
+#removing all of the blanks
+research <- research[-c(1), ]
+
+#combining them all
+all_qual <- rbind(teaching, gov)
+all_qual <- rbind(all_qual, work)
+all_qual <- rbind(all_qual, research)
+```
+
+# haha now doing it correctly like a fools
+
+
 
