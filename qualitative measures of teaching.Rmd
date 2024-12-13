@@ -217,10 +217,51 @@ government <- survey_hopefully %>%
 government %>% 
   count(gov)
 
+government[government == "Student Harrassment"] <- "Student Harassment"
+
+#government, get counts and rename
+gov <- government %>% 
+  count(gov) %>% 
+  rename("item" = gov)
+#removing all of the blanks
+gov <- gov[-c(1), ]
 #these are the top BY FAR 
 #pay 37
 #pay gap 24
 #reduce admin bloat 28
+
+
+#pulling just the teaching with more than 2
+gov_over_2 <- gov %>% 
+  filter(n >= 2) %>% 
+  arrange(desc(n))
+
+#breaking into two and then recombinding to make pretty table
+#picking first half manually
+g_1 <- gov_over_2 %>% 
+  slice(1:13) 
+
+#picking second half manually
+g_2 <- gov_over_2 %>% 
+  slice(14:26) %>% 
+  rename("item_2" = item,
+         "n_2" = n)
+
+#putting them back together so they can be swagalicious
+ree <- cbind(g_1, g_2)
+
+#making a gt
+gt_arrange <- gt(ree)
+gt_arrange <- gt_arrange %>% 
+  gt_highlight_rows(columns = c(item:n),
+                    rows = c(1:3)) %>% 
+  cols_label(item = "", 
+             n = "",
+             item_2 = "",
+             n_2 = "") %>% 
+  tab_header(title = "Top Priorities in Government With Over 2 Mentions")
+
+gt_arrange
 ```
 
 
