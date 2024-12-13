@@ -166,6 +166,43 @@ listed_tables <- list(first_half_teaching, second_half_teaching)
 gt_two_column_layout(listed_tables) 
 ```
 
+# making top teaching tables
+```{r}
+#pulling just the teaching with over 5 
+teaching_over_5 <- teaching %>% 
+  filter(n >= 5) %>% 
+  arrange(desc(n))
+
+#breaking into two and then recombinding to make pretty table
+#picking first half manually
+t_1 <- teaching_over_5 %>% 
+  slice(1:11) 
+
+#picking second half manually
+t_2 <- teaching_over_5 %>% 
+  slice(12:22) %>% 
+  rename("item_2" = item,
+         "n_2" = n)
+
+#putting them back together so they can be swagalicious
+ree <- cbind(t_1, t_2 )
+
+#making a gt
+gt_arrange <- gt(ree)
+gt_arrange <- gt_arrange %>% 
+  gt_highlight_rows(columns = c(item:n),
+                    rows = c(1:3)) %>% 
+  cols_label(item = "", 
+             n = "",
+             item_2 = "",
+             n_2 = "") %>% 
+  tab_header(title = "Top Priorities in Teaching With Over 5 Mentions")
+
+gt_arrange
+```
+
+
+
 # Main take away from TEACHING:
 People want to see Pay (38), Workload (26), and Clinical (18)
 
@@ -298,7 +335,6 @@ q_all_no_empty[q_all_no_empty == "Upgrade tech"] <- "Upgrade Tech"
 q_all_no_empty[q_all_no_empty == "Workloads"] <- "Workload"
 q_all_no_empty[q_all_no_empty == "Accountability for Tenure Track Faculty"] <- "Accountability"
 q_all_no_empty[q_all_no_empty == "Accountability for Tenure Faculty"] <- "Accountability"
-q_all_no_empty[q_all_no_empty == "Pay Gap"] <- "Pay"
 
 
 
@@ -356,7 +392,35 @@ gt_two_column_layout(listed_tables)
 # making this table way better bc ive kinda been stupid so far but thats 
 # okay because I have a concussion <3
 ```{r}
+#put in descending order first before splitting
+q_n_10 <- q_n_10 %>% 
+  arrange(desc(n))
 
+#picking first half manually
+first_q <- q_n_10 %>% 
+  slice(1:11) 
+
+#picking second half manually
+second_q <- q_n_10 %>% 
+  slice(12:22) %>% 
+  rename("item_2" = item,
+         "n_2" = n)
+
+#putting them back together so they can be swagalicious
+ree <- cbind(first_q, second_q )
+
+#making a gt
+gt_arrange <- gt(ree)
+gt_arrange <- gt_arrange %>% 
+  gt_highlight_rows(columns = c(item:n),
+                    rows = c(1:3)) %>% 
+  cols_label(item = "", 
+             n = "",
+             item_2 = "",
+             n_2 = "") %>% 
+  tab_header(title = "Written in Top Priorities With Over 10 Mentions")
+
+gt_arrange
 ```
 
 
