@@ -323,6 +323,13 @@ gt_arrange
 research <- survey_hopefully %>% 
   select(research)
 
+#renaming some that need to be 
+research[research == "Scholarship"] <- "Scholarships"
+research[research == "Open Science"] <- "Open Publications"
+research[research == "Core resources"] <- "Core Resources"
+research[research == "Teaching Loads"] <- "Workloads"
+
+
 #count
 research %>% 
   count(research)
@@ -331,6 +338,44 @@ research %>%
 #grants 29
 #workday 9
 #funding 9
+#put in descending order first before splitting
+r <- research %>% 
+  count(research) %>% 
+  arrange(desc(n)) %>% 
+  rename("item" = research)
+
+#remove the empty ones
+r <- r[-c(1), ]
+
+#just the ones over 2
+research_over <- r %>% 
+  filter(n > 1)
+
+#picking first half manually
+r_1 <- research_over %>% 
+  slice(1:12) 
+
+#picking second half manually
+r_2 <- research_over %>% 
+  slice(13:24) %>% 
+  rename("item_2" = item,
+         "n_2" = n)
+
+#putting them back together so they can be swagalicious
+ree <- cbind(r_1, r_2 )
+
+#making a gt
+gt_arrange <- gt(ree)
+gt_arrange <- gt_arrange %>% 
+  gt_highlight_rows(columns = c(item:n),
+                    rows = c(1:3)) %>% 
+  cols_label(item = "", 
+             n = "",
+             item_2 = "",
+             n_2 = "") %>% 
+  tab_header(title = "Top Priorities in Research With Over 2 Mentions")
+
+gt_arrange
 ```
 
 #adding them all together like a crazy person to see totals
