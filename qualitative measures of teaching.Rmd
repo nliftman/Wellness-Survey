@@ -278,6 +278,44 @@ work %>%
 #pay 13
 #safe buildings 13
 #childcare 9
+
+#put in descending order first before splitting
+worklife <- work %>% 
+  count(worklife) %>% 
+  arrange(desc(n))
+
+#remove the empty ones
+worklife <- worklife[-c(1), ]
+
+#just the ones over 2
+work_2 <- worklife %>% 
+  filter(n > 1)
+
+#picking first half manually
+workhalf_1 <- work_2 %>% 
+  slice(1:13) 
+
+#picking second half manually
+workhalf_2 <- work_2 %>% 
+  slice(14:26) %>% 
+  rename("item_2" = worklife,
+         "n_2" = n)
+
+#putting them back together so they can be swagalicious
+ree <- cbind(workhalf_1, workhalf_2 )
+
+#making a gt
+gt_arrange <- gt(ree)
+gt_arrange <- gt_arrange %>% 
+  gt_highlight_rows(columns = c(worklife:n),
+                    rows = c(1:3)) %>% 
+  cols_label(worklife = "", 
+             n = "",
+             item_2 = "",
+             n_2 = "") %>% 
+  tab_header(title = "Top Priorities in Worklife With Over 2 Mentions")
+
+gt_arrange
 ```
 
 # Research
