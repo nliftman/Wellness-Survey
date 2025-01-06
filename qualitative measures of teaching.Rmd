@@ -50,8 +50,6 @@ qualitative_teach_1 <- qualitative_teach[!(qualitative_teach$teaching_original =
 #there were 334 codes for these comments
 nrow(qualitative_teach_2)
 
-qualitative %>% count(teaching_original)
-
 #counting everything for teaching
 qualitative %>% count(teaching)
 
@@ -232,6 +230,21 @@ People want to see Pay (38), Workload (26), and Clinical (18)
 #taking all the gov things
 government <- survey_hopefully %>% 
   select(gov)
+
+#counting each of the original
+qual_gov <- qualitative %>% 
+  select(gov_original, gov)
+
+#drop the blanks and NAs
+gov_qual_1 <- qual_gov[!(qual_gov$gov_original == ""| is.na(qual_gov$gov_original)), ]
+
+#drop the blanks and NAs
+gov_qual_2 <- qual_gov[!(qual_gov$gov == ""| is.na(qual_gov$gov)), ]
+
+#there are 171 of the original teaching comments
+#there were 208 codes for these comments
+nrow(gov_qual_1)
+nrow(gov_qual_2)
 
 #looking at counts for gov
 government %>% 
