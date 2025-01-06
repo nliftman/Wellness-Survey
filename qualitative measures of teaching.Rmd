@@ -303,6 +303,22 @@ gt_arrange
 work <- survey_hopefully %>% 
   select(worklife)
 
+#counting each of the original
+work_qual <- qualitative %>% 
+  select(worklife_original, worklife)
+
+#drop the blanks and NAs
+work_qual1 <- work_qual[!(work_qual$worklife_original == ""| is.na(work_qual$worklife_original)), ]
+
+#drop the blanks and NAs
+work_qual2 <- work_qual[!(work_qual$worklife == ""| is.na(work_qual$worklife)), ]
+
+#there are 148 of the original teaching comments
+#there were 192 codes for these comments
+nrow(work_qual1)
+nrow(work_qual2)
+
+
 work %>% 
   count(worklife)
 
@@ -355,6 +371,22 @@ gt_arrange
 ```{r}
 research <- survey_hopefully %>% 
   select(research)
+
+#counting each of the original
+research_qual <- qualitative %>% 
+  select(research_original, research)
+
+#drop the blanks and NAs
+research_qual1 <- research_qual[!(research_qual$research_original == ""| is.na(research_qual$research_original)), ]
+
+#drop the blanks and NAs
+research_qual2 <- research_qual[!(research_qual$research == ""| is.na(research_qual$research)), ]
+
+#there are 148 of the original teaching comments
+#there were 192 codes for these comments
+nrow(research_qual1)
+nrow(research_qual2)
+
 
 #renaming some that need to be 
 research[research == "Scholarship"] <- "Scholarships"
