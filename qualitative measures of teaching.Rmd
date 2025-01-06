@@ -21,17 +21,37 @@ library(gtExtras)
 ```{r}
 #pulling the data and just getting the qualitative responses 
 survey_hopefully <- import("qualitative_well_being.csv") %>% 
-  rename("teaching" = 16,
+  rename("teaching_original" = 15,
+         "teaching" = 16,
+         "gov_original" = 31,
          "gov" = 32,
+         "worklife_original" = 46,
          "worklife" = 47,
+         "research_original" = 60,
          "research" = 61)
 
 qualitative <- survey_hopefully %>% 
-  select(teaching, gov, worklife, research)
+  select(teaching_original, teaching, gov_original, gov, worklife_original, worklife,research_original, research)
 ```
 
 #starting the cleaning for teaching
 ```{r}
+#counting each of the original
+qualitative_teach <- qualitative %>% 
+  select(teaching_original, teaching)
+
+#drop the blanks and NAs
+qualitative_teach_2 <- qualitative_teach[!(qualitative_teach$teaching == ""| is.na(qualitative_teach$teaching)), ]
+
+#drop the blanks and NAs
+qualitative_teach_1 <- qualitative_teach[!(qualitative_teach$teaching_original == ""| is.na(qualitative_teach$teaching_original)), ]
+
+#there are 269 of the original teaching comments
+#there were 334 codes for these comments
+nrow(qualitative_teach_2)
+
+qualitative %>% count(teaching_original)
+
 #counting everything for teaching
 qualitative %>% count(teaching)
 
