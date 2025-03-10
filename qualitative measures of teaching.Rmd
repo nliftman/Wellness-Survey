@@ -51,7 +51,7 @@ qualitative_teach_1 <- qualitative_teach[!(qualitative_teach$teaching_original =
 nrow(qualitative_teach_2)
 
 #counting everything for teaching
-qualitative %>% count(teaching)
+qualitative_teach_2 %>% count(teaching)
 
 #manually changing the silly ones 
 #update tech
@@ -199,7 +199,7 @@ t_1 <- teaching_over_5 %>%
 #picking second half manually
 t_2 <- teaching_over_5 %>% 
   slice(12:22) %>% 
-  rename("item_2" = item,
+  rename("item" = teaching,
          "n_2" = n)
 
 #putting them back together so they can be swagalicious
@@ -208,11 +208,11 @@ ree <- cbind(t_1, t_2 )
 #making a gt
 gt_arrange <- gt(ree)
 gt_arrange <- gt_arrange %>% 
-  gt_highlight_rows(columns = c(item:n),
+  gt_highlight_rows(columns = c(teaching:n),
                     rows = c(1:3)) %>% 
-  cols_label(item = "", 
+  cols_label(teaching = "", 
              n = "",
-             item_2 = "",
+             item = "",
              n_2 = "") %>% 
   tab_header(title = "Top Priorities in Teaching With Over 5 Mentions")
 
