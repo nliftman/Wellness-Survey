@@ -30,3 +30,61 @@ survey_hopefully <- import("well_being_survey.xlsx") %>%
 teaching_priority <- survey_hopefully %>% 
   select(large_enrollment:transparent_workloads)
 ```
+
+```{r}
+#removing highest and lowest from each of the sections so we can convert to numeric
+#large_enrollment
+#replacing the NA's with the lowest!
+teaching_priority[is.na(teaching_priority)] <- 6
+
+#removing all the blank spaces on both sides of the string
+teaching_priority$large_enrollment <- str_trim(teaching_priority$large_enrollment, side = c("both"))
+teaching_priority$upgrade_tech <- str_trim(teaching_priority$upgrade_tech, side = c("both"))
+teaching_priority$mentoring_undergrad <- str_trim(teaching_priority$mentoring_undergrad, side = c("both"))
+teaching_priority$three_year <- str_trim(teaching_priority$three_year, side = c("both"))
+teaching_priority$replace_student_evals <- str_trim(teaching_priority$replace_student_evals, side = c("both"))
+teaching_priority$course_release <- str_trim(teaching_priority$course_release, side = c("both"))
+teaching_priority$incentives_mentoring_phd <- str_trim(teaching_priority$incentives_mentoring_phd, side = c("both"))
+teaching_priority$transparent_workloads <- str_trim(teaching_priority$transparent_workloads, side = c("both"))
+
+#removing the strings and replacing them with numbers
+teaching_priority$large_enrollment <- sub("1 - Highest", 1, teaching_priority$large_enrollment)
+teaching_priority$large_enrollment <- sub("5 - Lowest", 5, teaching_priority$large_enrollment)
+
+teaching_priority$upgrade_tech <- sub("1 - Highest", 1, teaching_priority$upgrade_tech)
+teaching_priority$upgrade_tech <- sub("5 - Lowest", 5, teaching_priority$upgrade_tech)
+
+teaching_priority$mentoring_undergrad <- sub("1 - Highest", 1, teaching_priority$mentoring_undergrad)
+teaching_priority$mentoring_undergrad <- sub("5 - Lowest", 5, teaching_priority$mentoring_undergrad)
+
+teaching_priority$three_year <- sub("1 - Highest", 1, teaching_priority$three_year)
+teaching_priority$three_year <- sub("5 - Lowest", 5, teaching_priority$three_year)
+
+teaching_priority$replace_student_evals <- sub("1 - Highest", 1, teaching_priority$replace_student_evals)
+teaching_priority$replace_student_evals <- sub("5 - Lowest", 5, teaching_priority$replace_student_evals)
+
+teaching_priority$course_release <- sub("1 - Highest", 1, teaching_priority$course_release)
+teaching_priority$course_release <- sub("5 - Lowest", 5, teaching_priority$course_release)
+
+teaching_priority$incentives_mentoring_phd <- sub("1 - Highest", 1, teaching_priority$incentives_mentoring_phd)
+teaching_priority$incentives_mentoring_phd <- sub("5 - Lowest", 5, teaching_priority$incentives_mentoring_phd)
+
+teaching_priority$transparent_workloads <- sub("1 - Highest", 1, teaching_priority$transparent_workloads)
+teaching_priority$transparent_workloads <- sub("5 - Lowest", 5, teaching_priority$transparent_workloads)
+
+#remove the rows that we dont need
+teaching_priority <- teaching_priority[-c(855:865), ]
+
+#change to numeric
+teaching_priority$large_enrollment <- as.numeric(as.character(teaching_priority$large_enrollment))
+teaching_priority$upgrade_tech <- as.numeric(as.character(teaching_priority$upgrade_tech))
+teaching_priority$mentoring_undergrad <- as.numeric(as.character(teaching_priority$mentoring_undergrad))
+teaching_priority$three_year <- as.numeric(as.character(teaching_priority$three_year))
+teaching_priority$replace_student_evals <- as.numeric(as.character(teaching_priority$replace_student_evals))
+teaching_priority$course_release <- as.numeric(as.character(teaching_priority$course_release))
+teaching_priority$incentives_mentoring_phd <- as.numeric(as.character(teaching_priority$incentives_mentoring_phd))
+teaching_priority$transparent_workloads <- as.numeric(as.character(teaching_priority$transparent_workloads))
+```
+
+
+
