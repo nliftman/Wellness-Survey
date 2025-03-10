@@ -5,4 +5,28 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
+```{r}
+# loading the necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(rio)
+```
 
+# Teaching pulling the likert scale
+
+```{r}
+#pulling the data and just getting the quantitative likert responses 
+survey_hopefully <- import("well_being_survey.xlsx") %>% 
+  rename("large_enrollment" = 7,
+         "upgrade_tech" = 8,
+          "mentoring_undergrad" = 9,
+         "three_year" = 10,
+         "replace_student_evals" = 11,
+         "course_release" = 12,
+         "incentives_mentoring_phd" = 13,
+         "transparent_workloads" = 14)
+
+#pulling just the teaching
+teaching_priority <- survey_hopefully %>% 
+  select(large_enrollment:transparent_workloads)
+```
