@@ -39,6 +39,8 @@ ggplot(data = fcas, aes(x = Title, y = n)) +
 college <- roster %>% 
   group_by(College) %>% 
   count(Title)
+
+college$College <- sub("Seattle", "Medicine", college$College)
 ```
 
 
