@@ -13,7 +13,33 @@ library(rio)
 ```
 
 ```{r}
-#importing the stuffff
+#importing the stuff
 roster <- import("roster_for_analysis.csv")
 ```
+
+```{r}
+#grouping by the council
+roster_first <- roster %>% 
+  group_by(Council) %>% 
+  count(Title)
+  
+fcas <- roster_first %>% 
+  filter(Council == "FCAS")
+```
+
+#First graph attempt
+```{r}
+#realizing I dont need to make graphs for this haha
+ggplot(data = fcas, aes(x = Title, y = n)) +
+  geom_point()
+```
+
+# making hot tables
+```{r}
+college <- roster %>% 
+  group_by(College) %>% 
+  count(Title)
+```
+
+
 
