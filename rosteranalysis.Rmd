@@ -1,0 +1,19 @@
+---
+title: "aarti_report"
+author: "Naomi Liftman"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r warning = FALSE, message = FALSE, error = FALSE}
+#loading the necessary libraries 
+library(tidyverse)
+library(ggplot2)
+library(rio)
+```
+
+```{r}
+#importing the stuffff
+roster <- import("roster_for_analysis.csv")
+```
+
