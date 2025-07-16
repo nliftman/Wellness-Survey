@@ -124,7 +124,7 @@ ggplot(roster_count, aes(x = Title, y = n, fill = Title)) +
   facet_wrap(~College) +
   coord_flip() +
   geom_col() +
-  scale_fill_brewer(palette = "RdPu") +
+  scale_fill_manual(values = c("#fff400", "#ffa600", "#ff0000", "#ff00d4", "#d100ff", "#7400ff", "#3200ff", "#0059ff", "#00aaff", "#00fff0")) +
   theme(axis.text.y = element_blank()) +
   scale_y_continuous(breaks = seq(1, 10, by = 1)) 
   
