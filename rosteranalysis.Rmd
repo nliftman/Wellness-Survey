@@ -15,6 +15,23 @@ library(rio)
 ```{r}
 #importing the stuff
 roster <- import("roster_for_analysis.csv")
+
+#making some changes 
+#remove Seattle and change to medicine
+roster$College <- sub("Seattle", "Medicine", roster$College)
+#removing assistant without tenure to just assistant since asssitant prof
+#cannot have tenure! 
+roster$Title <- sub("Assistant Professor without Tenure", "Assistant Professor", roster$Title)
+#changing Adjunct Assistant Professor to just assistant professor 
+#the nuances are not super important in this analysis
+roster$Title <- sub("Adjunct Assistant Professor", "Assistant Professor", roster$Title)
+#changing Associate Professor without tenure to just Associate professor 
+roster$Title <- sub("Associate Professor without tenure", "Associate Professor", roster$Title)
+
+#remove the lines with Senior Lecturer and ROTC bc what the heck even are those
+roster_cleaned <- roster %>% 
+  filter(Title != "ROTC Professor") %>% 
+  filter(Title != "Senior Lecturer")
 ```
 
 ```{r}
@@ -22,7 +39,7 @@ roster <- import("roster_for_analysis.csv")
 roster_first <- roster %>% 
   group_by(Council) %>% 
   count(Title)
-  
+#turns out this is deeply unhelpful
 fcas <- roster_first %>% 
   filter(Council == "FCAS")
 ```
@@ -71,6 +88,10 @@ ggplot(art_astro_med, aes(x = Title)) +
   geom_bar() +
   coord_flip() +
   theme_bw() 
+```
+
+```{r}
+#try other things against medicine 
 ```
 
 
