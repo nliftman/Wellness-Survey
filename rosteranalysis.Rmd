@@ -10,6 +10,7 @@ output: pdf_document
 library(tidyverse)
 library(ggplot2)
 library(rio)
+library(ggthemes)
 ```
 
 ```{r}
@@ -27,6 +28,12 @@ roster$Title <- sub("Assistant Professor without Tenure", "Assistant Professor",
 roster$Title <- sub("Adjunct Assistant Professor", "Assistant Professor", roster$Title)
 #changing Associate Professor without tenure to just Associate professor 
 roster$Title <- sub("Associate Professor without tenure", "Associate Professor", roster$Title)
+#fixing built environments from Built Envionments
+roster$College <- sub("Built Envionments", "Built Environments", roster$College)
+#fixing enginneer
+roster$College <- sub("Enginnering", "Engineering", roster$College)
+#renaming the Evans school
+roster$College <- sub("Evans School of Public Policy & Governance", "Evans", roster$College)
 
 #remove the lines with Senior Lecturer and ROTC bc what the heck even are those
 roster_cleaned <- roster %>% 
@@ -87,11 +94,41 @@ ggplot(art_astro_med, aes(x = Title)) +
   facet_wrap(~College) +
   geom_bar() +
   coord_flip() +
-  theme_bw() 
+  theme_igray() +
+  scale_y_continuous(breaks = seq(1, 10, by = 1)) 
 ```
 
 ```{r}
-#try other things against medicine 
+#try other things against medicine to see if they are in the same order
+#medicine + 
+bio_built_med <- roster %>% 
+  filter(College == "Biology" | College == "Built Environments" | College == "Medicine")
+
+#now medicine toooo
+ggplot(bio_built_med, aes(x = Title)) + 
+  facet_wrap(~College) +
+  geom_bar() +
+  coord_flip() +
+  theme_igray() +
+  scale_y_continuous(breaks = seq(1, 10, by = 1)) 
 ```
+
+#Need to include both Medicine and A&S to get all 8 types 
+```{r}
+#lets try it with count instead! 
+roster_count <- roster_cleaned %>% 
+  group_by(College) %>% 
+  count(Title)
+
+ggplot(roster_count, aes(x = Title, y = n, fill = Title)) + 
+  facet_wrap(~College) +
+  coord_flip() +
+  geom_col() +
+  scale_fill_brewer(palette = "RdPu") +
+  theme(axis.text.y = element_blank()) +
+  scale_y_continuous(breaks = seq(1, 10, by = 1)) 
+  
+```
+
 
 
