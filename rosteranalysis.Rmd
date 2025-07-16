@@ -40,8 +40,37 @@ college <- roster %>%
   group_by(College) %>% 
   count(Title)
 
-college$College <- sub("Seattle", "Medicine", college$College)
+#there are 26 total - this makes a graph for each of them, but might be best to do just a few at a time
+ggplot(roster, aes(x = Title)) + 
+  facet_wrap(~College) +
+  geom_bar()
+
 ```
 
+```{r}
+#selecting specific ones and then making graph
+art_astro <- roster %>% 
+  filter(College == "Arts & Sciences" | College == "Astronomy")
+
+#have to alphebatize 
+
+#just astro and arts 
+ggplot(art_astro, aes(x = Title)) + 
+  facet_wrap(~College) +
+  geom_bar() +
+  coord_flip() +
+  theme_bw() 
+
+#medicine
+art_astro_med <- roster %>% 
+  filter(College == "Arts & Sciences" | College == "Astronomy" | College == "Medicine")
+
+#now medicine toooo
+ggplot(art_astro_med, aes(x = Title)) + 
+  facet_wrap(~College) +
+  geom_bar() +
+  coord_flip() +
+  theme_bw() 
+```
 
 
